@@ -2,10 +2,13 @@
 Basic preprocessing transfomation to Twitter data. 
 """
 
-from typing import Union
+from typing import Union, List
 from datetime import datetime
 
+import pandas as pd 
 from pandas.core.frame import DataFrame 
+
+from lib.utils import get_lexical_field
 
 def _string_to_float(x: Union[float, int, str]) -> float: 
     """Description. 
@@ -49,7 +52,7 @@ def clean_data(df: DataFrame) -> DataFrame:
 
     df.columns = df.columns.str.lower()
 
-    cols = ["timestamp", "embedded_text", "emojis", "retweets", "likes", "comments"]
+    cols = ["timestamp", "embedded_text", "emojis", "retweets", "likes", "comments", "lexical_field"]
     df = df.loc[:, cols]
 
     df = df.rename(columns={"embedded_text": "text"})
@@ -62,7 +65,28 @@ def clean_data(df: DataFrame) -> DataFrame:
 
     df["timestamp"] = df["timestamp"].apply(_to_datetime)
 
-    return df.reset_index(drop=True)
+    return df.reset_index(drop=True) 
+
+def merge_from_csv(files: List) -> DataFrame: 
+    """Description. 
+    Merge csv datasets and add lexical fields."""
+
+    df = pd.DataFrame()
+
+    for f in files: 
+        if f.split(".")[-1] != "csv": 
+            raise ValueError(f"{f} is not a csv file.")
+        
+        tmp = pd.read_csv(f)
+        n = tmp.shape[0] 
+
+        lexical_field = get_lexical_field(file_path=f) 
+        tmp["lexical_field"] = [lexical_field for _ in range(n)]
+
+        df = pd.concat([df, tmp])
+
+    return df 
+
 
 
 
