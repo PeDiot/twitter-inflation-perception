@@ -47,6 +47,17 @@ def _to_datetime(x: str) -> datetime:
     
     return datetime.strptime(x.split("T")[0], "%Y-%m-%d") 
 
+def _add_emoji(text: str, emoji: Union[str, float]) -> str: 
+    """"Descrition. Concatenation between text and emojis."""
+
+    if type(emoji) != str and not pd.isna(emoji): 
+        raise ValueError("emoji must be a string or nan.")
+
+    if pd.isna(emoji): 
+        return text 
+    
+    return text + " " + emoji 
+
 def clean_data(df: DataFrame) -> DataFrame: 
     """Description. Apply basic preprocessing steps to Twitter data."""
 
@@ -56,7 +67,7 @@ def clean_data(df: DataFrame) -> DataFrame:
     df = df.loc[:, cols]
 
     df = df.rename(columns={"embedded_text": "text"})
-    df.loc[:, "text_emojis"] = df.loc[:, "text"] + " " + df.loc[:, "emojis"]
+    df.loc[:, "text_emojis"] = df.apply(lambda x: _add_emoji(x.text, x.emojis), axis=1)
 
     num_cols = ["retweets", "likes", "comments"]
 
