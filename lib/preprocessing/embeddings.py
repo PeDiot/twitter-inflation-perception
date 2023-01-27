@@ -17,7 +17,7 @@ def text_to_embeddings(sentences: List, file_path: Optional[str]=None) -> np.nda
     >>> import pickle as pkl
     >>> path = "./backup/data/"
     >>> file_path = path+"tweets_preprocessed.pkl"
-    >>> with open(file_path, "rb") as f: tweets_preprocessed = pkl.load(f )
+    >>> with open(file_path, "rb") as f: tweets_preprocessed = pkl.load(f)
     >>> tweets = tweets_preprocessed["cleaned"]
     >>> embeddings = text_to_embeddings(tweets, file_path=path+"embeddings.npy")
     Batches:   1%|▋                                                                            | 24/2902 [01:21<2:54:49,  3.64s/it]"""
