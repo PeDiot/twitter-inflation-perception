@@ -58,7 +58,7 @@ def evaluate(model: CamembertForSequenceClassification, dataloader: DataLoader, 
             
             input_id = batch[0].to(device)
             attention_mask = batch[1].to(device)
-            sentiment = batch[2].to(device)
+            sentiment = batch[2]
 
             predicted_labels, _ = predict(input_id, attention_mask, model)
             predicted_labels = tensor_to_numpy(predicted_labels)
