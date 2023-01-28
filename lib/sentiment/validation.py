@@ -9,6 +9,8 @@ from tqdm import tqdm
 
 from typing import Tuple, List 
 
+from .utils import tensor_to_numpy
+
 def predict(
         input_ids: Tensor, 
         attention_mask: Tensor, 
@@ -59,6 +61,7 @@ def evaluate(model: CamembertForSequenceClassification, dataloader: DataLoader, 
             sentiment = batch[2].to(device)
 
             predicted_labels, _ = predict(input_id, attention_mask, model)
+            predicted_labels = tensor_to_numpy(predicted_labels)
 
             bacc = balanced_accuracy_score(sentiment, predicted_labels)
             accuracy_scores.append(bacc)
