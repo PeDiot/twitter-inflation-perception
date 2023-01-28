@@ -42,7 +42,7 @@ def predict(
         
     return predicted_labels, scores
 
-def evaluate(model: CamembertForSequenceClassification, dataloader: DataLoader) -> List:
+def evaluate(model: CamembertForSequenceClassification, dataloader: DataLoader, device: torch.device) -> List:
     """Description. Evaluate model on unseen batches and return balanced accuracy scores per batch.""" 
 
     accuracy_scores = [] 
@@ -54,10 +54,13 @@ def evaluate(model: CamembertForSequenceClassification, dataloader: DataLoader) 
 
         for batch in dataloader: 
             
-            input_ids, attention_mask, sentiments = batch 
-            predicted_labels, _ = predict(input_ids, attention_mask, model)
+            input_id = batch[0].to(device)
+            attention_mask = batch[1].to(device)
+            sentiment = batch[2].to(device)
 
-            bacc = balanced_accuracy_score(sentiments, predicted_labels)
+            predicted_labels, _ = predict(input_id, attention_mask, model)
+
+            bacc = balanced_accuracy_score(sentiment, predicted_labels)
             accuracy_scores.append(bacc)
 
             loop.set_postfix(balanced_accuracy_score=round(bacc, 2))
