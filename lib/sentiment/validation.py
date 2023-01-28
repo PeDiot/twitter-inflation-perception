@@ -54,7 +54,7 @@ def evaluate(model: CamembertForSequenceClassification, dataloader: DataLoader, 
     with torch.no_grad():
         model.eval()
 
-        for batch in dataloader: 
+        for batch in loop: 
             
             input_id = batch[0].to(device)
             attention_mask = batch[1].to(device)
