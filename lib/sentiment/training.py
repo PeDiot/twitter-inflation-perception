@@ -22,8 +22,6 @@ def init_scheduler(num_epochs: int, dataloader: DataLoader, optimizer: AdamW) ->
     return scheduler
     
 def check_convergence(
-        model: CamembertForSequenceClassification, 
-        path: str, 
         losses: List, 
         curr_loss: float, 
         consecutive_epochs_with_no_improve: int) -> int: 
