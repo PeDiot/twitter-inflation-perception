@@ -4,6 +4,7 @@ import torch
 from torch.utils.data import DataLoader
 from torch import Tensor
 
+import numpy as np 
 from sklearn.metrics import balanced_accuracy_score
 from tqdm import tqdm
 
@@ -66,6 +67,7 @@ def evaluate(model: CamembertForSequenceClassification, dataloader: DataLoader, 
             bacc = balanced_accuracy_score(sentiment, predicted_labels)
             accuracy_scores.append(bacc)
 
-            loop.set_postfix(balanced_accuracy_score=round(bacc, 2))
+            avg_bacc = np.mean(accuracy_scores)
+            loop.set_postfix(balanced_accuracy_score=round(avg_bacc, 2))
     
     return accuracy_scores

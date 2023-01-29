@@ -36,8 +36,7 @@ def check_convergence(
         consecutive_epochs_with_no_improve += 1
     else: 
         consecutive_epochs_with_no_improve = 0
-        backup_model(model, path)
-
+        
     return consecutive_epochs_with_no_improve
 
 def train(
