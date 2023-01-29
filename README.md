@@ -1,5 +1,12 @@
 # twitter-inflation-perception
 
+## TODO
+
+1. Classifieur pour identifier les tweets traitant des prix
+2. Voir méthode pour identifier la direction des prix (classifieur, identification par mots-clef) 
+3. Construction de l'indicateur (nombre de tweets traitant des prix, sentiment)
+4. Evaluation de l'indicateur à partir des données d'inflation observée
+
 ## Ressources 
 
 - Articles Medium NLP : [ici](https://medium.com/@p.emmanuel.diot/list/nlp-twitter-0fdb53596aeb)
