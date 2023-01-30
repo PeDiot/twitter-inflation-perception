@@ -1,6 +1,7 @@
 from lib.preprocessing.utils import (
     _string_to_float, 
     _to_datetime, 
+    _add_emoji, 
 )
 from lib.preprocessing.tweets import (
     _remove_links, 
@@ -37,6 +38,16 @@ def test_to_datetime():
     input = "2020-01-0107:41:04.000Z"
     with pytest.raises(ValueError):
         _to_datetime(input)
+
+def test_add_emoji(): 
+    text = "Hello world"
+    emoji = "🚀"
+    assert _add_emoji(text, emoji) == "Hello world 🚀"
+
+    assert _add_emoji(text, float("nan")) == "Hello world"
+
+    with pytest.raises(ValueError): 
+        _add_emoji(text, emoji=23)
 
 def test_remove_mentions(): 
     tweet = "Working on a python project with @joe"
