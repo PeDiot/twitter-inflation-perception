@@ -19,7 +19,7 @@ import numpy as np
 from typing import List, Optional
 from sentence_transformers import SentenceTransformer
 
-def load_transformer(model_name: str="dangvantuan/sentence-camembert-large") -> SentenceTransformer:
+def load_transformer(model_name: str="all-MiniLM-L6-v2") -> SentenceTransformer:
     """Description. Load SentenceTransformer from Hugging Face.""" 
 
     model = SentenceTransformer(model_name)
