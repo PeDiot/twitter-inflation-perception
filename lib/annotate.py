@@ -41,6 +41,6 @@ def add_labels(df: DataFrame, idxs: List, labels: List) -> DataFrame:
 
     labelled_df = df.copy()    
     mask = labelled_df.index.isin(idxs)
-    labelled_df.loc[mask, "Label"] = labels
+    labelled_df.loc[mask, "label"] = labels
 
     return labelled_df
