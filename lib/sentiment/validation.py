@@ -45,7 +45,11 @@ def predict(
         
     return predicted_labels, scores
 
-def evaluate(model: CamembertForSequenceClassification, dataloader: DataLoader, device: torch.device) -> List:
+def evaluate(
+        model: CamembertForSequenceClassification, 
+        dataloader: DataLoader, 
+        device: torch.device
+    ) -> List:
     """Description. Evaluate model on unseen batches and return balanced accuracy scores per batch.""" 
 
     accuracy_scores = [] 
