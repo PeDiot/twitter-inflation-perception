@@ -26,4 +26,4 @@ def test_add_labels(data):
     labels = ["not_about_prices", "inflation", "other"]
     new_data = add_labels(data, indices, labels)
 
-    assert new_data["Label"].values.tolist() == labels 
+    assert new_data["label"].values.tolist() == labels 
