@@ -29,7 +29,7 @@ The python implementation of the data process depicted above consists in a libra
 
 ## Data collection
 
-The first step lies in defining the data collection strategy. After having tested multiple solutions like `Twint` and `tweepy`, we have to cope with technical issues and/or limitations. When looking for other alternatives, the [`Scweet`](https://pypi.org/project/Scweet/) fits our expectations as it is a simple and unlimited Twitter scraper with python which enables query by keywords over a given period of time. It is decided to query tweets from 2020 to 2022 for the following keywords, sorted by lexical field: 
+The first step lies in defining the data collection strategy. After having tested multiple solutions like `Twint` and `tweepy`, we have to cope with technical issues and/or limitations. Fortunately, the [`Scweet`](https://pypi.org/project/Scweet/) library fits our expectations as it is a simple and unlimited Twitter scraper with python which enables query by keywords over a given period of time. It is decided to query tweets from 2020 to 2022 for the following keywords, sorted by lexical field: 
 
 | ECONOMICAL TERMS  |  PRICES | CHEAP  | EXPENSIVE  | INSTITUTIONS  | ENGLISH  |
 |---|---|---|---|---|---|
@@ -48,8 +48,3 @@ Julien Denes & Ariane Lestrade & Lou Richardet, 2022.
 "<B><A HREF="https://ideas.repec.org/h/bis/bisifc/57-13.html">Using twitter data to measure inflation perception</A></B>,"
 <A HREF="https://ideas.repec.org/s/bis/bisifc.html">IFC Bulletins chapters</A>, in:  Bank for International Settlements (ed.), <A HREF="/b/bis/bisifb/57.html">Machine learning in central banking</A>, volume 57,
 Bank for International Settlements.
-
-## Ressources 
-
-- Articles Medium NLP : [ici](https://medium.com/@p.emmanuel.diot/list/nlp-twitter-0fdb53596aeb)
-- Librairie `Scweet`: [PyPI](https://pypi.org/project/Scweet/) + [github](https://github.com/Altimis/Scweet)
