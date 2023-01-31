@@ -96,6 +96,11 @@ First, we labeled the tweets according to whether they were about inflation, dis
 
 More details can be found in the [`tw-labelling`](notebooks/tw-labelling.ipynb) notebook. 
 
+### Embedding 
+
+Each tweet was embedded of using a sentence transformer model, all-MiniLM-L6-v2. Tweets are therefore translated in a 384-dimensions space.
+This enabled to get numerical features on which a classification model can be applied. 
+
 
 ## Modeling process
 
@@ -113,7 +118,16 @@ With more time, we could have performed a verification of the classified tweets 
 
 This process has allowed us to obtain a monthly database for the past 3 years with the number of tweets mentioning prices, the number of tweets posted, and the proportion of tweets mentioning prices among the tweets posted. 
 
-These data were cross-referenced with monthly inflation data. At this stage, only a regression was tested to see if the number of monthly tweets could explain the inflation.  
+The indicator constructed is based on a 7/15/30-day moving average of standardized and non standardized daily number of tweets related to price.
+
+A  moving average  sentiment analysis was also used. 
+
+These data were cross-referenced with monthly inflation data. 
+At this stage, only a regression was tested to see if the number of monthly tweets could explain the inflation.
+Although results are statistically significant, it is not yet satisfying. 
+
+Our project would have need to collect and label more tweets with a better filtering (on geographical caracteristics, type of accounts (institutionals, companies...) etc...). Other variables would also have been useful to explain inflation as it is clear that the monthly number of tweet can't fully capture inflation rate. 
+
 
 
 ## References
