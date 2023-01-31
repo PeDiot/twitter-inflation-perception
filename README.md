@@ -103,7 +103,7 @@ We tried to obtain a classification model of the tweets from their embeddings. A
 
 These choices are based on the context of an embedding that places the tweets in a space of dimension 384. 
 The optimization of the hyperparameters was performed with Optuna. 
-The best result was obtained with XGboost. On the test sample, the recall was 80%, while the precision was 72%. With a constant model, changing the decision threshold to increase recall or accuracy could have been imagined. We did not make this choice, yet it is to discuss.
+The best result was obtained with XGboost.  On the test sample  $recall=\frac{TP}{TP+FN}$ is $80\%$ and its $precision=\frac{TP}{TP+FP}$ is $72\%$. With a constant model, changing the decision threshold to increase recall or accuracy could have been imagined. We did not make this choice, yet it is to discuss.
 
 Once the best model was saved, we predicted the class of the ~ 90,000 unlabeled data. 
 With more time, we could have performed a verification of the classified tweets and an addition of these tweets to the hand-labeled tweets base.
