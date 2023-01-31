@@ -98,44 +98,63 @@ More details can be found in the [`tw-labelling`](notebooks/tw-labelling.ipynb) 
 
 ### Embedding 
 
-Each tweet was embedded of using a sentence transformer model, all-MiniLM-L6-v2. Tweets are therefore translated in a 384-dimensions space.
-This enabled to get numerical features on which a classification model can be applied. 
-
-### Sentiment analysis 
-
-In order to get more information than just whether a tweet talks about prices or not and in which direction, a sentiment analysis was conducted. The objective was to be able to predict the polarity of a tweet.
-
-For this purpose, camemBert, a pre-trained version of roBERTa on French language tweets. 
-
-With more time, a prior labeling of the data in order to fine-tune the model could have been conducted. In this case, the focus was on the ex-ante evaluation of the model.
-
+Each tweet was converted into a numerical vector called embedding using the `SentenceTransformers` python framework (`all-MiniLM-L6-v2`). Tweets are therefore translated into a 384-dimension space. This method is helpful to get numerical features on which a classification model can be trained. 
 
 ## Modeling process
 
-We tried to obtain a classification model of the tweets from their embeddings. After a test train split at 33% of the labeled tweets dataset, several types of models have been tested, in particular a linear SVC, a random forest and an XGBoost. 
+### Filtering prices-related tweets
 
-These choices are based on the context of an embedding that places the tweets in a space of dimension 384. 
-The optimization of the hyperparameters was performed with Optuna. 
-The best result was obtained with XGboost.  On the test sample  $recall=\frac{TP}{TP+FN}$ is 80% and its $precision=\frac{TP}{TP+FP}$ is 72%. The global accuracy is 84%. With a constant model, changing the decision threshold to increase recall or accuracy could have been imagined. We did not make this choice, yet it is to discuss.
+In order to identify tweets related to prices and inflation, we fit a classification model of the tweets using their embeddings. After a test train split at 33% of the labeled tweets dataset, several types of models have been tested: linear SVC, random forest and XGBoost. 
 
-Once the best model was saved, we predicted the class of the ~ 90,000 unlabeled data. 
-With more time, we could have performed a verification of the classified tweets and an addition of these tweets to the hand-labeled tweets base.
+These choices are based on the context of an embedding that converts the tweets in a space of dimension 384. 
+The optimization of the hyperparameters was performed with `optuna`. 
+The best result is obtained with XGboost.  On the test sample  $\text{recall}=\frac{TP}{TP+FN}$ is 80% and its $\text{precision}=\frac{TP}{TP+FP}$ is 72%. The global accuracy is 84%. With a constant model, changing the decision threshold to increase recall or precision could have been imagined. We did not make this choice, yet it is to discuss.
 
+Once the best model trained on the whole annotated dataset, we predict the class of the ~ 90,000 unlabeled tweets.
+
+With more time, we could have performed a manual check of the classified tweets, then retrain the model focusing on the points for which he made a mistake. 
+
+### Sentiment analysis 
+
+In order to get more information than just whether a tweet is about prices or not, a sentiment analysis was conducted. The objective was to be able to predict the polarity of a tweet.
+
+For this purpose, `camemBERT`, a transformer-based model trained on French language data is fine-tuned on a french tweets dataset which comes from [Kaggle](https://www.kaggle.com/datasets/hbaflast/french-twitter-sentiment-analysis?resource=download&select=french_tweets.csv). We use Google Colaboratory for training since `camemBERT` is large language model of more than 110 milion parameters. The code and the results can be consulted [here](./notebooks/tw-sentiment-camembert.ipynb). 
+
+With more time, a prior labeling of the data in order to fine-tune the model could have been conducted. In this case, the focus was on the ex-ante evaluation of the model.
 
 ## Building an indicator of inflation perception
 
-This process has allowed us to obtain a monthly database for the past 3 years with the number of tweets mentioning prices, the number of tweets posted, and the proportion of tweets mentioning prices among the tweets posted. 
+Once the Twitter dataset filtered with the previously introduced custom technique, we have a cleaned dataset of 24, 312 tweets potentially related to prices over the 2020-2022 period.
 
-The indicator constructed is based on a 7/15/30-day moving average of standardized and non standardized daily number of tweets related to price.
+As in [[1]](#1), we count the daily number of tweets mentioning prices. We extend the analysis by counting the number of tweets with positive (resp. negative) polarity and calculting the daily average polarity of tweets. We thus get a Twitter indicator which is divided into two parts: number of prices-related tweets and tweets' sentiment. 
 
-A  moving average  sentiment analysis was also used. 
+With a view to get some insight on the accuracy of our methodology, we compare our indicators to the monthly inflation rate between 2020 and 2022. The data comes from the OCDE [website](https://data.oecd.org/fr/price/inflation-ipc.htm). Then, each Twitter indicator is aggregated on a monthly basis. We start by representing the evolution of both the inflation rate and our custom indicators and calculate correlations. 
 
-These data were cross-referenced with monthly inflation data. 
-At this stage, only a regression was tested to see if the number of monthly tweets could explain the inflation.
-Although results are statistically significant, it is not yet satisfying. 
+<figure>
+<img
+src="figs/correlations.png">
+<figcaption><i>Pearson linear correlation coefficient between inflation rate and Twitter indicators</i></figcaption>
+</figure>
 
-Our project would have need to collect and label more tweets with a better filtering (on geographical caracteristics, type of accounts (institutionals, companies...) etc...). Other variables would also have been useful to explain inflation as it is clear that the monthly number of tweet can't fully capture inflation rate. 
+Since the results we obtain are not satisfying enough, we choose to investigate whether the count and sentiment indicators can be anticipatory of the future inflation rate, or reflecting of past inflation rate. To do so, we shift and lead the values the indicators previously introduced and calculate correlations.
 
+<figure>
+<img
+src="figs/correlations_shift.png">
+<figcaption><i>Pearson linear correlation coefficient as a function of shifts in Twitter indicators</i></figcaption>
+</figure>
+
+It looks like the Twitter indicator which counts the daily number of tweets related to prices as well as the two counting positive and negative tweets are more correlated to inflation at month $m+6$. This indicates that our Twitter indicator is a forward-looking measure of inflation, providing insights on perceptions of future inflation.
+
+We finally fit a linear regression model between of the inflation rate on the shifted Twitter indicators. The model where the indicator counting the number of prices-related tweets is used as explanatory variable manages to reach a 64% $R^2$ which is quite motivating. 
+
+![](figs/inflation_indic_evol.png)
+
+More details on the methodology we developed are explained [here](/notebooks/tw-analysis.ipynb).
+
+## Areas for improvement
+
+Our project would have need to collect and label more tweets with a better filtering on geographical features, type of accounts (institutionals, companies, etc.), and so on. Other variables would also have been useful to explain inflation as it is clear that the monthly number of tweets about prices matter cannot fully capture the evolution in the inflation rate. An interesting approach would be to assess the extent to which Twitter indicators can enrich traditional inflation forecasting models. 
 
 
 ## References
