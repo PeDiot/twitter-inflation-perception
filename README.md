@@ -101,6 +101,14 @@ More details can be found in the [`tw-labelling`](notebooks/tw-labelling.ipynb) 
 Each tweet was embedded of using a sentence transformer model, all-MiniLM-L6-v2. Tweets are therefore translated in a 384-dimensions space.
 This enabled to get numerical features on which a classification model can be applied. 
 
+### Sentiment analysis 
+
+In order to get more information than just whether a tweet talks about prices or not and in which direction, a sentiment analysis was conducted. The objective was to be able to predict the polarity of a tweet.
+
+For this purpose, camemBert, a pre-trained version of roBERTa on French language tweets. 
+
+With more time, a prior labeling of the data in order to fine-tune the model could have been conducted. In this case, the focus was on the ex-ante evaluation of the model.
+
 
 ## Modeling process
 
