@@ -90,11 +90,31 @@ The usual components of text preprocessing like tokenization, removing stopwords
 
 ### Manual data annotation 
 
-Since the project's purpose is to measure inflation perception through Twitter data, we need to make sure the collected tweets are about prices. To that end, we decide to manually label 1,000 tweets. More precisely, it consists in assessing whether the tweet is about prices or not leveraging the features of [`ipyannotations`](https://ipyannotations.readthedocs.io/en/latest/). More details can be found in the [`tw-labelling`](notebooks/tw-labelling.ipynb) notebook. 
+Since the project's purpose is to measure inflation perception through Twitter data, we need to make sure the collected tweets are about prices. To that end, we decide to manually label 1,000 tweets. More precisely, it consists in assessing whether the tweet is about prices or not leveraging the features of [`ipyannotations`](https://ipyannotations.readthedocs.io/en/latest/). 
+
+First, we labeled the tweets according to whether they were about inflation, disinflation, deflation, price stability, something else about prices or whether they were not about prices. However, we realized that with 1000 tweets labeled we only had about 30 tweets about prices that were not in the inflation category. This was not enough, even if we quintupled the number of labeled tweets, so we kept only the label "about prices" in which all the previously mentioned labels were grouped. 
+
+More details can be found in the [`tw-labelling`](notebooks/tw-labelling.ipynb) notebook. 
+
 
 ## Modeling process
 
+We tried to obtain a classification model of the tweets from their embeddings. After a test train split at 33% of the labeled tweets dataset, several types of models have been tested, in particular a linear SVC, a random forest and an XGBoost. 
+
+These choices are based on the context of an embedding that places the tweets in a space of dimension 384. 
+The optimization of the hyperparameters was performed with Optuna. 
+The best result was obtained with XGboost. On the test sample, the recall was 80%, while the accuracy was 72%. With a constant model, changing the decision threshold to increase recall or accuracy could have been imagined. We did not make this choice.
+
+Once the best model was saved, we predicted the class of the ~ 90,000 unlabeled data. 
+With more time, we could have performed a verification of the classified tweets and an addition of these tweets to the hand-labeled tweets base.
+
+
 ## Building an indicator of inflation perception
+
+This process has allowed us to obtain a monthly database for the past 3 years with the number of tweets mentioning prices, the number of tweets posted, and the proportion of tweets mentioning prices among the tweets posted. 
+
+These data were cross-referenced with monthly inflation data. At this stage, only a regression was tested to see if the number of monthly tweets could explain the inflation.  
+
 
 ## References
 
