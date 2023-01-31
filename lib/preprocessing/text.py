@@ -20,6 +20,7 @@ STOPLIST.remove("pas")
 STOPLIST.append("’")
 STOPLIST.append("«")
 STOPLIST.append("»")
+STOPLIST.append("…")
 
 def tokenize(text: str) -> List: 
     """Description. Convert text into list of tokens."""
