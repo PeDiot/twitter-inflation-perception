@@ -17,6 +17,9 @@ from spacy.lang.fr.stop_words import STOP_WORDS as fr_stop
 
 STOPLIST = list(set(stopwords.words("french") + list(fr_stop)))
 STOPLIST.remove("pas")
+STOPLIST.append("’")
+STOPLIST.append("«")
+STOPLIST.append("»")
 
 def tokenize(text: str) -> List: 
     """Description. Convert text into list of tokens."""
