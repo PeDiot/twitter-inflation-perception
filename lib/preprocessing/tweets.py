@@ -5,8 +5,8 @@ import re
 
 from typing import List 
 
-MENTION = "@[A-Za-z0-9_]+"
-DATE = "[\s]\d{2}[^\S\n\t]+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)+[\s]\d{4}"
+MENTION = r"@[A-Za-z0-9_]+"
+DATE = r"[\s]\d{2}[^\S\n\t]+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)+[\s]\d{4}"
 
 def _remove_mentions(tweet: str) -> str: 
     """Description. Remove all mentions in tweets containing the @ flag."""
