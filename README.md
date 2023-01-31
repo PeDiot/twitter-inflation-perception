@@ -10,7 +10,7 @@ Inspired by [[1]](#1), our project aims to measure inflation perception by analy
 
 ## Objective 
 
-To evaluate inflation perception, we calculate the daily number of tweets about inflation or prices as well as measuring the sentiment of each tweet with transformer-based models. 
+**To assess inflation perception, we count the daily number of tweets about inflation or prices and measure the sentiment of each tweet with transformer-based models. By doing so, we aim at getting insights on both the volume of inflation-related tweets and their polarity.**
 
 ## Project overview
 
@@ -86,7 +86,7 @@ For instance, the tweet "My friend @joe and I use this website https://stackover
 
 ### Text preprocessing
 
-The usual components of text preprocessing like tokenization, removing stopwords and punctuation as well as stemming are also implemented in `lib` and can be used on the tweets. The underlying objective of these transformations is to use them upstream of word2vec. However, we decid not to use the word2vec algorithm in favor of more advanced methods based on transformers. The latter having already implemented text preprocessing methods, we thus do not use the ones in `lib`. 
+The usual components of text preprocessing like tokenization, removing stopwords and punctuation as well as stemming are also implemented in `lib` and can be used on the tweets. The underlying objective of these transformations is to remove the noise contained in the text before data exploration. 
 
 ### Manual data annotation 
 
