@@ -53,7 +53,9 @@ tests\test_utils.py ..                                                          
 ======================================================= 18 passed in 21.63s =======================================================
 ```
 
-### Installation
+### Requirements
+
+#### Virtual environment
 
 One can run the following commands in the command prompt to create a virtual environment and install all the necessary libraries which `lib` depends on. 
 
@@ -62,6 +64,14 @@ One can run the following commands in the command prompt to create a virtual env
 > env\Scripts\activate.bat 
 > pip install -r requirements.txt
 ```
+
+#### Backup 
+
+All the necessary files to run the notebooks are located on this Google Drive [folder](https://drive.google.com/drive/folders/1Y8H1GohY5F76quEoMrheqzljiTAgJ5aS?usp=share_link).
+
+#### Notebook 
+
+The main notebook is [tw-analysis](notebooks/tw-analysis.ipynb) and it explains the whole methodology implemented to build the Twitter inflation indicator. 
 
 ## Data collection
 
