@@ -106,6 +106,9 @@ src="figs/wordcloud.png">
 <figcaption><i>Wordcloud of our Twitter corpus</i></figcaption>
 </figure>
 
+<br>
+<br>
+
 Note that a dynamic visualisation of topics identified with Latent Dirichlet Allocation (LDA) can be downloaded [here](./figs/lda_4_topics.html).
 
 ### Manual data annotation 
@@ -158,6 +161,7 @@ src="figs/correlations.png">
 </figure>
 
 <br>
+<br>
 
 Since the results we obtain are not satisfying enough, we choose to investigate whether the count and sentiment indicators can be anticipatory of the future inflation rate, or reflecting of past inflation rate. To do so, we shift and lead the values of the indicators previously introduced and calculate correlations. 
 
@@ -167,6 +171,7 @@ src="figs/correlations_shift.png">
 <figcaption><i>Pearson linear correlation coefficient as a function of shifts in Twitter indicators</i></figcaption>
 </figure>
 
+<br>
 <br>
 
 It looks like the Twitter indicator which counts the daily number of tweets related to prices as well as the two counting positive and negative tweets are more correlated to inflation at month $m+6$. This indicates that our Twitter indicator is a forward-looking measure of inflation, providing insights on perceptions of future inflation.
