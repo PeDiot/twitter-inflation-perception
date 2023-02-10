@@ -89,7 +89,7 @@ Three main steps can be highlighted in terms of data preprocessing applied on th
 
 ### Cleaning tweets
 
-The first step consists in removing polluting items from the the text of each tweet such as:
+The first step consists in removing polluting items from the text of each tweet such as:
 - the number of retweets/likes/comments, 
 - the date, 
 - the eventual items "Show this thread" or "Replying to". 
@@ -126,11 +126,11 @@ See the [tw-embeddings](notebooks/tw-embeddings.ipynb) notebook and [lib.preproc
 
 ### Filtering prices-related tweets
 
-In order to identify tweets related to prices and inflation, we fit a classification model of the tweets using their embeddings. After a test train split at 33% of the labeled dataset, several types of models are trained: linear SVC, random forest and XGBoost. These choices are motivated by the fact that embeddings convert text into a high-dimensional (384) space. 
+In order to identify tweets related to prices and inflation, we fit a classification model on tweets' embeddings. Several types of models are trained on $\frac{2}{3}$ of the annotated dataset: linear SVC, random forest and XGBoost. These choices are motivated by the fact that embeddings convert text into a high-dimensional space ($d=384$). 
 
-The optimization of the hyperparameters is performed with the means of the `optuna` library.
+The optimization of the hyperparameters is performed with the means of the [`optuna`](https://optuna.org/) library.
 
-The best result is obtained with XGboost. On the test sample  $\text{recall}=\frac{TP}{TP+FN}$ is 80% and its $\text{precision}=\frac{TP}{TP+FP}$ is 72%. The global accuracy is 84%. With a constant model, changing the decision threshold to increase recall or precision could have been imagined. We did not make this choice, yet it is to discuss.
+The best result is obtained with XGboost. On the test sample, $\text{recall}=\frac{TP}{TP+FN}$ is 80% and $\text{precision}=\frac{TP}{TP+FP}$ is 72%. The global accuracy is 84%. With a constant model, changing the decision threshold to increase recall or precision could have been imagined. We did not make this choice, yet it is to discuss.
 
 Once the best model trained on the whole annotated dataset, we predict the class of the ~ 90,000 unlabeled tweets.
 
@@ -157,6 +157,8 @@ src="figs/correlations.png">
 <figcaption><i>Pearson linear correlation coefficient between inflation rate and Twitter indicators</i></figcaption>
 </figure>
 
+<br>
+
 Since the results we obtain are not satisfying enough, we choose to investigate whether the count and sentiment indicators can be anticipatory of the future inflation rate, or reflecting of past inflation rate. To do so, we shift and lead the values of the indicators previously introduced and calculate correlations. 
 
 <figure>
@@ -164,6 +166,8 @@ Since the results we obtain are not satisfying enough, we choose to investigate 
 src="figs/correlations_shift.png">
 <figcaption><i>Pearson linear correlation coefficient as a function of shifts in Twitter indicators</i></figcaption>
 </figure>
+
+<br>
 
 It looks like the Twitter indicator which counts the daily number of tweets related to prices as well as the two counting positive and negative tweets are more correlated to inflation at month $m+6$. This indicates that our Twitter indicator is a forward-looking measure of inflation, providing insights on perceptions of future inflation.
 
